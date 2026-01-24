@@ -1,9 +1,16 @@
 import Image from "next/image";
+import { getPayload } from "payload";
+import configPromise from "@/payload.config";
 
-export default function Home() {
+export default async function Home() {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      
+    <div>
+      page
     </div>
   );
 }
