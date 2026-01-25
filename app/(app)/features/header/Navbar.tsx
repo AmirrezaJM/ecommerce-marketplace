@@ -74,7 +74,7 @@ export const Navbar = () => {
                     <Link href="/sign-up">Start Selling</Link>
                 </Button>
             </div>
-            <div className="flex lg:hidden items-center justify-center">
+            <div className="flex lg:hidden items-center justify-center mr-2">
                 <Button variant="outline" size="icon" onClick={() => setIsSidebarOpen(true)}>
                     <MenuIcon />
                 </Button>
