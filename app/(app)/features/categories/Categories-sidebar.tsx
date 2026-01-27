@@ -13,7 +13,7 @@ interface Props {
     data: Category[];
 }
 
-const CategoriesSidebar = ({ isOpen, onOpenChange, data }: Props) => {
+const categoriesSidebar = ({ isOpen, onOpenChange, data }: Props) => {
     const router = useRouter()
     const [parentCategories, setparentCategories] = useState<Category | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -84,4 +84,4 @@ const CategoriesSidebar = ({ isOpen, onOpenChange, data }: Props) => {
     );
 }
 
-export default CategoriesSidebar;
+export default categoriesSidebar;

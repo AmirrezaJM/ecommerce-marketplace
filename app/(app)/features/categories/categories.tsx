@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
-import CategoriesSidebar from "./Categories-sidebar";
+import CategoriesSidebar from "./categories-sidebar";
 
 interface CategoriesProps {
     data: any;
@@ -54,7 +54,7 @@ export const Categories = ({
 
     return (
         <div ref={containerRef} className="relative w-full">
-            {/* {JSON.stringify(data, null, 2)} */}
+            {/* TODO: Create it as a seperate loading component by usung TRPC */}
             <CategoriesSidebar isOpen={isSidebarOpen} onOpenChange={setIsSidebarOpen} data={data} />
             {/* HIDDEN CATEGORIES */}
             <div
