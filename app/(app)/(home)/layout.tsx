@@ -1,7 +1,7 @@
-import { Navbar } from "../features/header/Navbar";
-import { SearchFilters, SearchFiltersSkeleton } from "../features/search-filters";
+import { Navbar } from "../../../features/header/Navbar";
+import { SearchFilters, SearchFiltersSkeleton } from "../../../features/search-filters";
 import React, { Suspense } from "react";
-import { Footer } from "../features/footer/footer";
+import { Footer } from "../../../features/footer/footer";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
