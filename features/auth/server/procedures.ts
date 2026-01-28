@@ -2,29 +2,33 @@ import { AUTH_COOKIE_NAME } from "@/lib/constants";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { headers as getHeaders, cookies as getCookies } from "next/headers";
-import { z } from "zod";
+import { loginSchema, registerSchema } from "../schema/schemas";
 export const authRouter = createTRPCRouter({
     session: baseProcedure.query(async ({ ctx }) => {
         const headers = await getHeaders();
         const session = await ctx.payload.auth({ headers })
         return session;
     }),
-    register: baseProcedure.input(z.object({
-        email: z.email(),
-        password: z.string().min(5),
-        username: z.string().min(3, "username must be at least 3 characters").max(63, "username must be less than 63 characters")
-            .regex(/^[a-z0-9][a-z0-9-]*[a-z0-9]$/, " Username can only contain lowecase letters, numbers and it must end with a letter or number")
-            .refine((val) => !val.includes("--"), "Username cannot contain consecutive hyphens")
-            .refine((val) => !val.includes("admin"), "Username cannot be admin")
-            .transform((val) => val.toLowerCase()),
-    })).mutation(async ({ input, ctx }) => {
+    register: baseProcedure.input(registerSchema)
+    .mutation(async ({ input, ctx }) => {
+        const existingData = await ctx.payload.find({
+            collection: "users",
+            limit: 1,
+            where: {
+                username: {
+                    equals: input.username,
+                },
+            },
+        });
+        const existingUser = existingData.docs[0];
+        if (existingUser) {
+            throw new TRPCError({ code: "BAD_REQUEST", message: "Username already exists" });
+        }
+        
         await ctx.payload.create({ collection: "users", data: { email: input.email, username: input.username, password: input.password } })
     }),
 
-    login: baseProcedure.input(z.object({
-        email: z.email(),
-        password: z.string(),
-    })).mutation(async ({ input, ctx }) => {
+    login: baseProcedure.input(loginSchema).mutation(async ({ input, ctx }) => {
         const data = await ctx.payload.login({
             collection: "users",
             data: {
