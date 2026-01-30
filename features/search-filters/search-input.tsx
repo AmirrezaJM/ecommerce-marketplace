@@ -22,6 +22,7 @@ export const SearchInput = ({
 
     const trpc = useTRPC();
     const session = useQuery(trpc.auth.session.queryOptions());
+    
     return (
         <div className="flex items-center gap-2 w-full">
             <CategoriesSidebar data={data} isOpen={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
