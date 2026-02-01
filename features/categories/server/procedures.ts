@@ -27,3 +27,6 @@ export const categoriesRouter = createTRPCRouter({
         return formatedData;
     })
 });
+
+// localhost:3000/favicon.ico
+// localhost:3000/
